@@ -1,3 +1,3 @@
-package packagename
+package worker
 
 // TODO: Implement
