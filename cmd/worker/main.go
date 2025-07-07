@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	log.Printf("🚀 Starting TaskFlow Worker...")
+	log.Printf("Starting TaskFlow Worker...")
 
 	// Configuration from environment variables
 	config := getConfig()
@@ -63,14 +63,14 @@ func main() {
 		time.Sleep(100 * time.Millisecond)
 	}
 
-	log.Printf("✅ Started %d workers", config.WorkerCount)
+	log.Printf("Started %d workers", config.WorkerCount)
 
 	// Wait for interrupt signal for graceful shutdown
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	log.Println("🛑 Shutting down workers...")
+	log.Println("Shutting down workers...")
 
 	// Cancel context to signal all workers to stop
 	cancel()
@@ -84,9 +84,9 @@ func main() {
 
 	select {
 	case <-done:
-		log.Println("✅ All workers shut down gracefully")
+		log.Println("All workers shut down gracefully")
 	case <-time.After(30 * time.Second):
-		log.Println("⚠️  Force shutdown after timeout")
+		log.Println("Force shutdown after timeout")
 	}
 }
 

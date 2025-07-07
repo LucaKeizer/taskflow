@@ -53,7 +53,7 @@ func main() {
 		JobTypes:   []string{"email", "webhook", "image_resize", "data_export"},
 	}
 
-	fmt.Printf("🚀 Starting TaskFlow Load Test\n")
+	fmt.Printf("Starting TaskFlow Load Test\n")
 	fmt.Printf("API URL: %s\n", config.APIUrl)
 	fmt.Printf("Jobs: %d\n", config.JobCount)
 	fmt.Printf("Concurrent: %d\n", config.Concurrent)
@@ -65,7 +65,7 @@ func main() {
 
 	// Test API connectivity
 	if !testConnectivity(config.APIUrl) {
-		fmt.Printf("❌ Cannot connect to API at %s\n", config.APIUrl)
+		fmt.Printf("Cannot connect to API at %s\n", config.APIUrl)
 		return
 	}
 
@@ -296,7 +296,7 @@ func makeJobRequest(apiUrl string, jobTypes []string) time.Duration {
 
 func printResults(result TestResult) {
 	fmt.Println()
-	fmt.Println("📊 Load Test Results")
+	fmt.Println("Load Test Results")
 	fmt.Printf("Total Requests:    %d\n", result.TotalRequests)
 	fmt.Printf("Successful Jobs:   %d\n", result.SuccessfulJobs)
 	fmt.Printf("Failed Requests:   %d\n", result.FailedRequests)
@@ -313,23 +313,23 @@ func printResults(result TestResult) {
 
 	// Performance assessment
 	if result.RequestsPerSec > 100 {
-		fmt.Println("🎉 Excellent performance!")
+		fmt.Println("Excellent performance!")
 	} else if result.RequestsPerSec > 50 {
-		fmt.Println("✅ Good performance")
+		fmt.Println("Good performance")
 	} else if result.RequestsPerSec > 20 {
-		fmt.Println("⚠️  Moderate performance")
+		fmt.Println("Moderate performance")
 	} else {
-		fmt.Println("❌ Poor performance")
+		fmt.Println("Poor performance")
 	}
 
 	successRate := float64(result.SuccessfulJobs) / float64(result.TotalRequests) * 100
 	if successRate > 99 {
-		fmt.Println("🎯 Excellent reliability!")
+		fmt.Println("Excellent reliability!")
 	} else if successRate > 95 {
-		fmt.Println("✅ Good reliability")
+		fmt.Println("Good reliability")
 	} else if successRate > 90 {
-		fmt.Println("⚠️  Moderate reliability")
+		fmt.Println("Moderate reliability")
 	} else {
-		fmt.Println("❌ Poor reliability")
+		fmt.Println("Poor reliability")
 	}
 }

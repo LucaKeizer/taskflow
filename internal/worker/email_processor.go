@@ -54,7 +54,7 @@ func (e *EmailProcessor) sendEmail(ctx context.Context, payload types.EmailPaylo
 	select {
 	case <-time.After(time.Duration(1+len(payload.Body)/100) * time.Second):
 		// Email "sent" successfully
-		log.Printf("✉️  Email sent to %s", payload.To)
+		log.Printf("Email sent to %s", payload.To)
 		return nil
 	case <-ctx.Done():
 		return ctx.Err()

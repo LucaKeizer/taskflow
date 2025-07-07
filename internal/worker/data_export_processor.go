@@ -96,7 +96,7 @@ func (d *DataExportProcessor) processExport(ctx context.Context, payload types.D
 		Format:   payload.ExportType,
 	}
 
-	log.Printf("📊 Exported %d rows to %s (%d bytes)", result.RowCount, result.Format, result.FileSize)
+	log.Printf("Exported %d rows to %s (%d bytes)", result.RowCount, result.Format, result.FileSize)
 
 	return result, nil
 }

@@ -39,8 +39,8 @@ func NewWorker(queue *queue.RedisQueue, storage *storage.PostgresStorage) *Worke
 
 // Start begins the worker's job processing loop
 func (w *Worker) Start(ctx context.Context) error {
-	log.Printf("🚀 Starting worker %s", w.ID)
-	log.Printf("📋 Supported job types: %v", w.supportedTypes)
+	log.Printf("Starting worker %s", w.ID)
+	log.Printf("Supported job types: %v", w.supportedTypes)
 
 	// Register worker in database
 	if err := w.registerWorker(ctx); err != nil {
@@ -54,10 +54,10 @@ func (w *Worker) Start(ctx context.Context) error {
 	for {
 		select {
 		case <-ctx.Done():
-			log.Printf("🛑 Worker %s shutting down due to context cancellation", w.ID)
+			log.Printf("Worker %s shutting down due to context cancellation", w.ID)
 			return ctx.Err()
 		case <-w.shutdown:
-			log.Printf("🛑 Worker %s shutting down", w.ID)
+			log.Printf("Worker %s shutting down", w.ID)
 			return nil
 		default:
 			if err := w.processNextJob(ctx); err != nil {
@@ -86,7 +86,7 @@ func (w *Worker) processNextJob(ctx context.Context) error {
 		return nil
 	}
 
-	log.Printf("🔄 Worker %s processing job %s (type: %s)", w.ID, job.ID, job.Type)
+	log.Printf("Worker %s processing job %s (type: %s)", w.ID, job.ID, job.Type)
 
 	// Update worker status
 	w.updateWorkerStatus(ctx, "processing", job.ID)
@@ -98,11 +98,11 @@ func (w *Worker) processNextJob(ctx context.Context) error {
 
 	if err != nil {
 		// Job failed
-		log.Printf("❌ Job %s failed after %v: %v", job.ID, processingDuration, err)
+		log.Printf("Job %s failed after %v: %v", job.ID, processingDuration, err)
 
 		// Check if error is retryable
 		if types.IsRetryableError(err) && job.Attempts < job.MaxAttempts {
-			log.Printf("🔄 Job %s will be retried (attempt %d/%d)", job.ID, job.Attempts+1, job.MaxAttempts)
+			log.Printf("Job %s will be retried (attempt %d/%d)", job.ID, job.Attempts+1, job.MaxAttempts)
 		}
 
 		if err := w.queue.FailJob(ctx, job.ID, err.Error()); err != nil {
@@ -121,7 +121,7 @@ func (w *Worker) processNextJob(ctx context.Context) error {
 		w.storage.UpdateJob(ctx, job)
 	} else {
 		// Job succeeded
-		log.Printf("✅ Job %s completed successfully in %v", job.ID, processingDuration)
+		log.Printf("Job %s completed successfully in %v", job.ID, processingDuration)
 
 		if err := w.queue.CompleteJob(ctx, job.ID, result); err != nil {
 			log.Printf("Failed to mark job as completed: %v", err)

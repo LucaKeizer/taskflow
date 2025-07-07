@@ -56,9 +56,9 @@ func main() {
 
 	// Start server in a goroutine
 	go func() {
-		log.Printf("🚀 TaskFlow API Server listening on %s", config.ServerAddr)
-		log.Printf("📊 Health check: http://%s/api/v1/health", config.ServerAddr)
-		log.Printf("📋 API docs will be available at: http://%s/api/v1/", config.ServerAddr)
+		log.Printf("TaskFlow API Server listening on %s", config.ServerAddr)
+		log.Printf("Health check: http://%s/api/v1/health", config.ServerAddr)
+		log.Printf("API docs will be available at: http://%s/api/v1/", config.ServerAddr)
 
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Server failed to start: %v", err)
@@ -70,7 +70,7 @@ func main() {
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
 
-	log.Println("🛑 Shutting down server...")
+	log.Println("Shutting down server...")
 
 	// Graceful shutdown with timeout
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
@@ -80,7 +80,7 @@ func main() {
 		log.Printf("Server forced to shutdown: %v", err)
 	}
 
-	log.Println("✅ Server shutdown complete")
+	log.Println("Server shutdown complete")
 }
 
 type Config struct {

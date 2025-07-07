@@ -45,7 +45,7 @@ create_and_track_job() {
         sleep 2
     done
     
-    echo "📋 Final job details:"
+    echo "Final job details:"
     curl -s "$API_URL/jobs/$job_id" | python3 -m json.tool || echo "$status_response"
     echo
 }
